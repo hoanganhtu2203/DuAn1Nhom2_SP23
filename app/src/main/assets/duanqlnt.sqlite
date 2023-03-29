@@ -1,0 +1,50 @@
+BEGIN TRANSACTION;
+CREATE TABLE IF NOT EXISTS "BangGia" (
+	"Ma"	INTEGER,
+	"GiaDien"	money NOT NULL,
+	"GiaNuoc"	money NOT NULL,
+	PRIMARY KEY("Ma")
+);
+CREATE TABLE IF NOT EXISTS "Phong" (
+	"MaPhong"	INTEGER,
+	"TenPhong"	varchar(20) NOT NULL,
+	"Tang"	varchar(10) NOT NULL,
+	"TienCoc"	money NOT NULL,
+	"SoDien"	INTEGER NOT NULL,
+	"SoNuoc"	INTEGER NOT NULL,
+	"TrangThai"	bit NOT NULL,
+	PRIMARY KEY("MaPhong" AUTOINCREMENT)
+);
+CREATE TABLE IF NOT EXISTS "ChiTietHoaDon" (
+	"MaCTHD"	INTEGER,
+	"TienPhong"	TEXT NOT NULL,
+	"TienDien"	TEXT NOT NULL,
+	"TienNuoc"	TEXT NOT NULL,
+	"TienInternet"	TEXT,
+	"TienDVKhac"	TEXT,
+	"LyDoThu"	TEXT,
+	"NgayLapHoaDon"	TEXT,
+	"TrangThai"	TEXT,
+	"MaPhong"	INTEGER,
+	"TongTien"	TEXT,
+	"SoDien"	TEXT,
+	"SoNuoc"	TEXT,
+	FOREIGN KEY("MaPhong") REFERENCES "Phong"("MaPhong"),
+	PRIMARY KEY("MaCTHD" AUTOINCREMENT)
+);
+CREATE TABLE IF NOT EXISTS "KhachThue" (
+	"MaKhach"	INTEGER,
+	"TenKhach"	nvarchar(50) NOT NULL,
+	"GioiTinh"	bit NOT NULL,
+	"NgaySinh"	nvarchar(20) NOT NULL,
+	"CCCD"	varchar(12) NOT NULL,
+	"SDT"	varchar(10) NOT NULL,
+	"NgayThue"	nvarchar(20) NOT NULL,
+	"MaPhong"	INTEGER,
+	FOREIGN KEY("MaPhong") REFERENCES "Phong"("MaPhong"),
+	PRIMARY KEY("MaKhach" AUTOINCREMENT)
+);
+INSERT INTO "BangGia" ("Ma","GiaDien","GiaNuoc") VALUES (1,4000,15000);
+INSERT INTO "Phong" ("MaPhong","TenPhong","Tang","TienCoc","SoDien","SoNuoc","TrangThai") VALUES (101,'','','',0,0,'');
+INSERT INTO "KhachThue" ("MaKhach","TenKhach","GioiTinh","NgaySinh","CCCD","SDT","NgayThue","MaPhong") VALUES (1,'Nguyễn Thế Thanh',1,'28-03-2003','001202018943','0353801389','01-02-2023',101);
+COMMIT;
