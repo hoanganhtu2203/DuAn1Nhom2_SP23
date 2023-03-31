@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.duan1nhom2_sp23.DAO.AdminDAO;
 import com.example.duan1nhom2_sp23.R;
+import com.example.duan1nhom2_sp23.View.MainActivity;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class LoginActivity extends AppCompatActivity {
