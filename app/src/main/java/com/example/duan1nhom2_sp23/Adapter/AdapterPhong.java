@@ -11,14 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
 import com.example.duan1nhom2_sp23.Action.SuaPhongActivity;
+import com.example.duan1nhom2_sp23.Database.Database;
 import com.example.duan1nhom2_sp23.Model.Phong;
 import com.example.duan1nhom2_sp23.R;
+import com.example.duan1nhom2_sp23.View.XemThanhVienActivity;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -61,8 +64,8 @@ public class AdapterPhong extends BaseAdapter {
         TextView txtlau = (TextView)row.findViewById(R.id.tv_lau);
         TextView txttiencoc = (TextView)row.findViewById(R.id.tv_tiencoc);
         TextView txttrangthai = (TextView)row.findViewById(R.id.tv_trangthai);
-        Button btnXoaPhong = (Button) row.findViewById(R.id.btnXoaPhong);
-        Button btnSuaPhong = (Button) row.findViewById(R.id.btnSuaPhong);
+        ImageButton btnXoaPhong = (ImageButton) row.findViewById(R.id.btnXoaPhong);
+        ImageButton btnSuaPhong = (ImageButton)  row.findViewById(R.id.btnSuaPhong);
 
         final Phong phong = list.get(position);
 
@@ -103,7 +106,7 @@ public class AdapterPhong extends BaseAdapter {
                 Phong phong = list.get(position);
                 int maphong = phong.maphong;
 
-                Intent intent = new Intent(context,XemThanhVienActivity.class);
+                Intent intent = new Intent(context, XemThanhVienActivity.class);
                 intent.putExtra("MaPhong",maphong);
                 context.startActivity(intent);
                 context.finish();

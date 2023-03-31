@@ -1,9 +1,9 @@
 package com.example.duan1nhom2_sp23.View;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,161 +14,86 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.duan1nhom2_sp23.Action.CapNhatGiaDienNuocActivity;
-import com.example.duan1nhom2_sp23.Action.ThemPhongActivity;
-import com.example.duan1nhom2_sp23.Adapter.AdapterPhong;
+import com.example.duan1nhom2_sp23.Action.ThemNguoiThueActivity;
+import com.example.duan1nhom2_sp23.Adapter.AdapterKhachThue;
 import com.example.duan1nhom2_sp23.Database.Database;
-import com.example.duan1nhom2_sp23.Model.Phong;
+import com.example.duan1nhom2_sp23.Model.KhachThue;
 import com.example.duan1nhom2_sp23.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class DanhSachPhongActivity extends AppCompatActivity {
+public class XemThanhVienActivity extends AppCompatActivity
+{
     final String DATABASE_NAME = "QuanLyNhaTroNew.sqlite";
     SQLiteDatabase database;
-    ListView lsvDanhSachPhong;
-    ArrayList<Phong> list;
-    AdapterPhong adapter;
+    ListView lsvDanhsachthanhvien;
     int maphong = -1;
-    int position = 0;
+    ArrayList<KhachThue> list;
+    AdapterKhachThue adapter;
     FloatingActionButton ftbTrangChu, ftbHoaDon, ftbPhong, ftbBangGia;
     Animation tren, trai, xeo,back_trai,back_tren,back_xeo;
     boolean trove = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_danh_sach_phong);
+        setContentView(R.layout.activity_xem_thanh_vien);
         addControl();
         readData();
         AnhXa();
         ThaoTac();
     }
-
-
-
     private void readData()
     {
+        Intent intent = getIntent();
+        maphong = intent.getIntExtra("MaPhong",-1);
         database = Database.initDatabase(this,DATABASE_NAME);
-        Cursor cursor =  database.rawQuery("select * from Phong",null);
+        Cursor cursor = database.rawQuery("select * from KhachThue where MaPhong = ?",new String[]{maphong+""});
         list.clear();
-
         for(int i = 0 ; i< cursor.getCount(); i++)
         {
             cursor.moveToPosition(i);
-            int maphong = cursor.getInt(0);
-            String tenphong = cursor.getString(1);
-            String lau = cursor.getString(2);
-            String tiencoc = cursor.getString(3);
-            int sodien = cursor.getInt(4);
-            int sonuoc = cursor.getInt(5);
-            String trangthai = cursor.getString(6);
-            list.add(new Phong(maphong,tenphong,lau,tiencoc,sodien,sonuoc,trangthai));
+            int makhach = cursor.getInt(0);
+            String tenkhach = cursor.getString(1);
+            String gioitinh = cursor.getString(2);
+            String ngaysinh = cursor.getString(3);
+            String cmnd = cursor.getString(4);
+            String sdt = cursor.getString(5);
+            String ngaythue = cursor.getString(6);
+
+            int maphong = cursor.getInt(7);
+            list.add(new KhachThue(makhach,tenkhach,gioitinh,ngaysinh,cmnd,sdt,ngaythue,maphong));
         }
         adapter.notifyDataSetChanged();
     }
 
     private void addControl()
     {
-        lsvDanhSachPhong = (ListView) findViewById(R.id.lsvDanhsachphong);
+        lsvDanhsachthanhvien = (ListView) findViewById(R.id.lsvDanhsachthanhvien);
         list = new ArrayList<>();
-        adapter = new AdapterPhong(this,list);
-        lsvDanhSachPhong.setAdapter(adapter);
-
+        adapter = new AdapterKhachThue(this,list);
+        lsvDanhsachthanhvien.setAdapter(adapter);
     }
-
-
-
-    public interface  SingleChoiceListener{
-        void onPositionButtonClick(String[] list1,int position);
-        void onNagativeButtonClick();
-    }
-    SingleChoiceListener mlistener;
-
-
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        getMenuInflater().inflate(R.menu.menu, menu);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_themnguoithue, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_search:
-                final AlertDialog.Builder builder = new AlertDialog.Builder(DanhSachPhongActivity.this);
-                final String[] list1 = {"Tất cả", "Còn Trống","Đã cho thuê"};
-                builder.setTitle("Tìm kiếm");
-                builder.setSingleChoiceItems(list1, position, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int i) {
-                        position = i;
-                        if(position==0)
-                        {
-                            readData();
+            case R.id.action_searchkhach:
 
-                        }
-                        else if(position == 1)
-                        {
-                            database = Database.initDatabase(DanhSachPhongActivity.this,DATABASE_NAME);
-                            Cursor cursor =  database.rawQuery("select * from Phong where TrangThai = ?",new String[]{0+""});
-                            list.clear();
-
-                            for(int m = 0 ; m< cursor.getCount(); m++)
-                            {
-                                cursor.moveToPosition(m);
-                                int maphong = cursor.getInt(0);
-                                String tenphong = cursor.getString(1);
-                                String lau = cursor.getString(2);
-                                String tiencoc = cursor.getString(3);
-                                int sodien = cursor.getInt(4);
-                                int sonuoc = cursor.getInt(5);
-                                String trangthai = cursor.getString(6);
-                                list.add(new Phong(maphong,tenphong,lau,tiencoc,sodien,sonuoc,trangthai));
-                            }
-                            adapter.notifyDataSetChanged();
-
-                        }else{
-                            database = Database.initDatabase(DanhSachPhongActivity.this,DATABASE_NAME);
-                            Cursor cursor =  database.rawQuery("select * from Phong where TrangThai = ?",new String[]{1+""});
-                            list.clear();
-
-                            for(int m = 0 ; m< cursor.getCount(); m++)
-                            {
-                                cursor.moveToPosition(m);
-                                int maphong = cursor.getInt(0);
-                                String tenphong = cursor.getString(1);
-                                String lau = cursor.getString(2);
-                                String tiencoc = cursor.getString(3);
-                                int sodien = cursor.getInt(4);
-                                int sonuoc = cursor.getInt(5);
-                                String trangthai = cursor.getString(6);
-                                list.add(new Phong(maphong,tenphong,lau,tiencoc,sodien,sonuoc,trangthai));
-                            }
-                            adapter.notifyDataSetChanged();
-
-                        }
-                    }
-                });
-
-                builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                AlertDialog dialog =builder.create();
-                dialog.show();
                 return true;
-            case R.id.action_add:
+            case R.id.action_addKhach:
                 Intent intent1 = getIntent();
                 maphong = intent1.getIntExtra("MaPhong",-1);
-                Intent intent = new Intent(DanhSachPhongActivity.this, ThemPhongActivity.class);
+                Intent intent = new Intent(XemThanhVienActivity.this, ThemNguoiThueActivity.class);
                 intent.putExtra("MaPhong1",maphong);
                 startActivity(intent);
                 finish();
@@ -182,7 +107,7 @@ public class DanhSachPhongActivity extends AppCompatActivity {
         ftbPhong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DanhSachPhongActivity.this,DanhSachPhongActivity.class);
+                Intent intent = new Intent(XemThanhVienActivity.this,DanhSachPhongActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -190,7 +115,7 @@ public class DanhSachPhongActivity extends AppCompatActivity {
         ftbBangGia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DanhSachPhongActivity.this, CapNhatGiaDienNuocActivity.class);
+                Intent intent = new Intent(XemThanhVienActivity.this, CapNhatGiaDienNuocActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -198,7 +123,7 @@ public class DanhSachPhongActivity extends AppCompatActivity {
         ftbHoaDon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DanhSachPhongActivity.this, DanhSachHoaDonActivity.class);
+                Intent intent = new Intent(XemThanhVienActivity.this, DanhSachHoaDonActivity.class);
                 startActivity(intent);
                 finish();
             }

@@ -8,15 +8,16 @@
     android:padding="10dp">
 
     <TextView
-            android:id="@+id/tv_tenphong"
-            android:layout_width="80dp"
-            android:layout_height="130dp"
-            android:background="#5858FA"
-            android:gravity="center"
-            android:text="305"
-            android:textAlignment="center"
-            android:textSize="30dp"
-            android:textStyle="bold" />
+        android:id="@+id/tv_tenphong"
+        android:layout_width="80dp"
+        android:layout_height="130dp"
+        android:background="@drawable/house"
+        android:gravity="center"
+        android:text="01"
+        android:textAlignment="center"
+        android:textSize="10dp"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
     <LinearLayout
             android:layout_width="215dp"
@@ -123,7 +124,7 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <Button
+        <ImageButton
             android:id="@+id/btnSuaPhong"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -131,7 +132,7 @@
             android:background="@mipmap/exchange"
             android:gravity="center" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btnXoaPhong"
             android:layout_width="30dp"
             android:layout_height="30dp"
