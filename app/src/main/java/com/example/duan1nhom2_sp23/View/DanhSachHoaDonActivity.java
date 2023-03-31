@@ -201,7 +201,7 @@ public class DanhSachHoaDonActivity extends AppCompatActivity {
 
         spnNamHoaDon = findViewById(R.id.spnNamHoaDon);
         ArrayList<Integer> arrNam = new ArrayList<>();
-        for (int i = year; i > 2018; i--) {
+        for (int i = year; i > 2022; i--) {
             arrNam.add(i);
         }
         ArrayAdapter arrayAdapter1 = new ArrayAdapter(this, android.R.layout.simple_spinner_item, arrNam);

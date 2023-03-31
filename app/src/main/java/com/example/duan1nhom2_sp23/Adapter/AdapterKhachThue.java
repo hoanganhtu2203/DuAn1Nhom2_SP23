@@ -72,7 +72,7 @@ public class AdapterKhachThue extends BaseAdapter
         ImageButton btnXoaKhachThue = (ImageButton) row.findViewById(R.id.btnXoaKhachThue);
         ImageButton btnSuaKhachThue = (ImageButton) row.findViewById(R.id.btnSuaKhachThue);
         ImageButton btnGoiKhach = (ImageButton) row.findViewById(R.id.btnGoiKhach);
-
+ImageButton btnSms = (ImageButton) row.findViewById(R.id.btnSms);
         final KhachThue khachthue = list.get(position);
 
         //txtMa.setText(khachthue.makhach);
@@ -109,7 +109,7 @@ public class AdapterKhachThue extends BaseAdapter
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("Thông báo");
-                builder.setMessage("Bạn có chắc chắn xóa phòng?");
+                builder.setMessage("Bạn có chắc chắn xóa Khách thuê?");
                 builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -148,6 +148,17 @@ public class AdapterKhachThue extends BaseAdapter
                     });
                     AlertDialog dialog =builder.create();
                     dialog.show();
+                }
+            }
+
+        });
+        btnSms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String sdt = khachthue.sdt;
+                if(!TextUtils.isEmpty(sdt)) {
+                    String sms = "tel:" + sdt;
+                    context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.fromParts("sms", sms, null)));
                 }
             }
         });

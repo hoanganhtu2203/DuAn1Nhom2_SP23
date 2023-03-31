@@ -73,14 +73,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         ftbTrangChu.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(View v) {
                 if (trove == false)
                 {
                     move();
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        taoThongBao();
                     }
                     trove= true;
 
@@ -146,56 +144,4 @@ public class MainActivity extends AppCompatActivity {
         ftbHoaDon.startAnimation(back_xeo);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void taoThongBao(){
-        String id = "channel_1";
-        String description = "123";
-        int importance = NotificationManager.IMPORTANCE_LOW;
-        NotificationChannel channel = new NotificationChannel(id, "123", importance);
-
-        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        manager.createNotificationChannel(channel);
-        PendingIntent pendingIntent = null;
-        Notification notification = new Notification.Builder(MainActivity.this, id)
-
-                .setCategory(Notification.CATEGORY_MESSAGE)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("This is a content title")
-                .setContentText("This is a content text")
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true)
-                .build();
-        manager.notify(1, notification);
-
-
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.baidu.com"));
-        pendingIntent = PendingIntent.getActivity(MainActivity.this, 0, intent, 0);
-        manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= 26) {
-
-            description = "143";
-            importance = NotificationManager.IMPORTANCE_LOW;
-            channel = new NotificationChannel(id, description, importance);
-            channel.enableVibration(true);
-            manager.createNotificationChannel(channel);
-            notification = new Notification.Builder(MainActivity.this, id)
-                    .setCategory(Notification.CATEGORY_MESSAGE)
-                    .setSmallIcon(R.drawable.thongbao)
-                    .setContentTitle("Thông Báo")
-                    .setContentText("Nhập số điện nước của tháng")
-                    .setContentIntent(pendingIntent)
-                    .setAutoCancel(true)
-                    .build();
-            manager.notify(1, notification);
-        } else {
-
-            notification = new NotificationCompat.Builder(MainActivity.this)
-                    .setContentTitle("This is content title")
-                    .setContentText("This is content text")
-                    .setContentIntent(pendingIntent)
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .build();
-            manager.notify(1, notification);
-        }
-    }
 }

@@ -8,7 +8,6 @@
     android:gravity="center">
 
 
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -103,6 +102,7 @@
 
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -125,6 +125,7 @@
 
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -150,18 +151,29 @@
 
     </LinearLayout>
 
+    <requestFocus />
+
     <LinearLayout
         android:layout_width="61dp"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
         <ImageButton
             android:id="@+id/btnGoiKhach"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/goidi"
             android:gravity="center" />
+
+        <ImageButton
+            android:id="@+id/btnSms"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/chat"
+            android:gravity="center" />
+
         <ImageButton
             android:id="@+id/btnSuaKhachThue"
             android:layout_width="30dp"
@@ -169,7 +181,6 @@
             android:layout_marginTop="10dp"
             android:background="@mipmap/exchange"
             android:gravity="center" />
-
         <ImageButton
             android:id="@+id/btnXoaKhachThue"
             android:layout_width="30dp"
@@ -180,7 +191,4 @@
             android:gravity="center" />
 
     </LinearLayout>
-
-
-    <requestFocus />
 </LinearLayout>
