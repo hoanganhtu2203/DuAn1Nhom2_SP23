@@ -1,89 +1,164 @@
 package com.example.duan1nhom2_sp23.View;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-
-
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
+import android.widget.ListView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.duan1nhom2_sp23.Action.CapNhatGiaDienNuocActivity;
+import com.example.duan1nhom2_sp23.Adapter.AdapterChiTietHoaDon;
+import com.example.duan1nhom2_sp23.Database.Database;
+import com.example.duan1nhom2_sp23.Model.Phong;
 import com.example.duan1nhom2_sp23.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class MainActivity extends AppCompatActivity {
-    private NotificationCompat.Builder notBuilder;
+import java.util.ArrayList;
 
-    private static final int MY_NOTIFICATION_ID = 12345;
+public class DanhSachPhong_HoaDonActivity extends AppCompatActivity {
 
-    private static final int MY_REQUEST_CODE = 100;
+    final String DATABASE_NAME = "QuanLyNhaTroNew.sqlite";
+    SQLiteDatabase database;
+    ListView lsvDanhSachPhong;
+    ArrayList<Phong> list;
+    AdapterChiTietHoaDon adapter;
+
+    int position = 0 ;
     FloatingActionButton ftbTrangChu, ftbHoaDon, ftbPhong, ftbBangGia;
     Animation tren, trai, xeo,back_trai,back_tren,back_xeo;
     boolean trove = false;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_danh_sach_phong__hoa_don);
+        addControl();
+        readData();
         AnhXa();
         ThaoTac();
-        this.notBuilder = new NotificationCompat.Builder(this);
 
-        // Thông báo sẽ tự động bị hủy khi người dùng click vào Panel
-
-        this.notBuilder.setAutoCancel(true);
     }
 
+    private void readData() {
+        database = Database.initDatabase(this, DATABASE_NAME);
+        Cursor cursor = database.rawQuery("select * from Phong", null);
+        list.clear();
+
+        for (int i = 0; i < cursor.getCount(); i++) {
+            cursor.moveToPosition(i);
+            int maphong = cursor.getInt(0);
+            String tenphong = cursor.getString(1);
+            String lau = cursor.getString(2);
+            String tiencoc = cursor.getString(3);
+            int sodien = cursor.getInt(4);
+            int sonuoc = cursor.getInt(5);
+            String trangthai = cursor.getString(6);
+            list.add(new Phong(maphong, tenphong, lau, tiencoc, sodien, sonuoc, trangthai));
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    private void addControl() {
+        lsvDanhSachPhong = (ListView) findViewById(R.id.lsvdsphonghoadon);
+        list = new ArrayList<>();
+        adapter = new AdapterChiTietHoaDon(this, list);
+        lsvDanhSachPhong.setAdapter(adapter);
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.allhoadon, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_searchallhd:
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder(DanhSachPhong_HoaDonActivity.this);
+                final String[] list1 = {"Tất cả", "Chưa thanh toán","Đã thanh toán"};
+                builder.setTitle("Tìm kiếm");
+                builder.setSingleChoiceItems(list1, position, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                        position = i;
+                        if(position==0)
+                        {
+                            readData();
+
+                        }
+                        else if(position == 1)
+                        {
+                            
+
+                        }else{
+
+
+                        }
+                    }
+                });
+
+                builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                AlertDialog dialog =builder.create();
+                dialog.show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     private void ThaoTac()
     {
         ftbPhong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,DanhSachPhongActivity.class);
+                Intent intent = new Intent(DanhSachPhong_HoaDonActivity.this,DanhSachPhongActivity.class);
                 startActivity(intent);
-
+                finish();
             }
         });
         ftbBangGia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CapNhatGiaDienNuocActivity.class);
+                Intent intent = new Intent(DanhSachPhong_HoaDonActivity.this, CapNhatGiaDienNuocActivity.class);
                 startActivity(intent);
-
+                finish();
             }
         });
         ftbHoaDon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, DanhSachHoaDonActivity.class);
+                Intent intent = new Intent(DanhSachPhong_HoaDonActivity.this, DanhSachHoaDonActivity.class);
                 startActivity(intent);
-
+                finish();
             }
         });
 
         ftbTrangChu.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(View v) {
                 if (trove == false)
                 {
                     move();
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        taoThongBao();
-                    }
                     trove= true;
-
                 }
                 else
                 {
@@ -144,58 +219,5 @@ public class MainActivity extends AppCompatActivity {
         paramsXeo.rightMargin -= (int) (ftbHoaDon.getWidth() * 1);
         ftbHoaDon.setLayoutParams(paramsXeo);
         ftbHoaDon.startAnimation(back_xeo);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void taoThongBao(){
-        String id = "channel_1";
-        String description = "123";
-        int importance = NotificationManager.IMPORTANCE_LOW;
-        NotificationChannel channel = new NotificationChannel(id, "123", importance);
-
-        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        manager.createNotificationChannel(channel);
-        PendingIntent pendingIntent = null;
-        Notification notification = new Notification.Builder(MainActivity.this, id)
-
-                .setCategory(Notification.CATEGORY_MESSAGE)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("This is a content title")
-                .setContentText("This is a content text")
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true)
-                .build();
-        manager.notify(1, notification);
-
-
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.baidu.com"));
-        pendingIntent = PendingIntent.getActivity(MainActivity.this, 0, intent, 0);
-        manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= 26) {
-
-            description = "143";
-            importance = NotificationManager.IMPORTANCE_LOW;
-            channel = new NotificationChannel(id, description, importance);
-            channel.enableVibration(true);
-            manager.createNotificationChannel(channel);
-            notification = new Notification.Builder(MainActivity.this, id)
-                    .setCategory(Notification.CATEGORY_MESSAGE)
-                    .setSmallIcon(R.drawable.thongbao)
-                    .setContentTitle("Thông Báo")
-                    .setContentText("Nhập số điện nước của tháng")
-                    .setContentIntent(pendingIntent)
-                    .setAutoCancel(true)
-                    .build();
-            manager.notify(1, notification);
-        } else {
-
-            notification = new NotificationCompat.Builder(MainActivity.this)
-                    .setContentTitle("This is content title")
-                    .setContentText("This is content text")
-                    .setContentIntent(pendingIntent)
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .build();
-            manager.notify(1, notification);
-        }
     }
 }

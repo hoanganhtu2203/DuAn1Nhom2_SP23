@@ -1,89 +1,116 @@
-package com.example.duan1nhom2_sp23.View;
+package com.example.duan1nhom2_sp23.Action;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-
-
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
+import android.content.ContentValues;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.duan1nhom2_sp23.Action.CapNhatGiaDienNuocActivity;
+import com.example.duan1nhom2_sp23.Database.Database;
 import com.example.duan1nhom2_sp23.R;
+import com.example.duan1nhom2_sp23.View.DanhSachHoaDonActivity;
+import com.example.duan1nhom2_sp23.View.DanhSachPhongActivity;
+import com.example.duan1nhom2_sp23.View.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class MainActivity extends AppCompatActivity {
-    private NotificationCompat.Builder notBuilder;
-
-    private static final int MY_NOTIFICATION_ID = 12345;
-
-    private static final int MY_REQUEST_CODE = 100;
+public class CapNhatGiaDienNuocActivity extends AppCompatActivity {
+    EditText edtGiaDien,edtGiaNuoc;
+    Button btnCapNhat;
+    SQLiteDatabase database;
+    final String DATABASE_NAME = "QuanLyNhaTroNew.sqlite";
     FloatingActionButton ftbTrangChu, ftbHoaDon, ftbPhong, ftbBangGia;
     Animation tren, trai, xeo,back_trai,back_tren,back_xeo;
     boolean trove = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_cap_nhat_gia_dien_nuoc);
         AnhXa();
+        setUI();
         ThaoTac();
-        this.notBuilder = new NotificationCompat.Builder(this);
 
-        // Thông báo sẽ tự động bị hủy khi người dùng click vào Panel
-
-        this.notBuilder.setAutoCancel(true);
     }
 
+
+
+    private void setUI()
+    {
+        int ma = 1;
+        database= Database.initDatabase(CapNhatGiaDienNuocActivity.this,DATABASE_NAME);
+        Cursor cursor = database.rawQuery("select * from BangGia where Ma = ?",new String[]{ma+""});
+        cursor.moveToFirst();
+        String giadien = cursor.getString(1);
+        String gianuoc = cursor.getString(2);
+        edtGiaDien.setText(giadien);
+        edtGiaNuoc.setText(gianuoc);
+    }
+    private void SuaGia()
+    {
+        int ma =1;
+        String giadien = edtGiaDien.getText().toString();
+        String gianuoc = edtGiaNuoc.getText().toString();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("GiaDien",giadien);
+        contentValues.put("GiaNuoc",gianuoc);
+
+        SQLiteDatabase database = Database.initDatabase(CapNhatGiaDienNuocActivity.this,DATABASE_NAME);
+        database.update("BangGia",contentValues,"Ma = ?",new String[]{ma+""});
+        Intent intent = new Intent(CapNhatGiaDienNuocActivity.this, MainActivity.class);
+        startActivity(intent);
+        Toast.makeText(CapNhatGiaDienNuocActivity.this,"Cập nhật giá thành công",Toast.LENGTH_LONG).show();
+        finish();
+    }
     private void ThaoTac()
     {
+        btnCapNhat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SuaGia();
+            }
+        });
+
         ftbPhong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,DanhSachPhongActivity.class);
+                Intent intent = new Intent(CapNhatGiaDienNuocActivity.this, DanhSachPhongActivity.class);
                 startActivity(intent);
-
+                finish();
             }
         });
         ftbBangGia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CapNhatGiaDienNuocActivity.class);
+                Intent intent = new Intent(CapNhatGiaDienNuocActivity.this, CapNhatGiaDienNuocActivity.class);
                 startActivity(intent);
-
+                finish();
             }
         });
         ftbHoaDon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, DanhSachHoaDonActivity.class);
+                Intent intent = new Intent(CapNhatGiaDienNuocActivity.this, DanhSachHoaDonActivity.class);
                 startActivity(intent);
-
+                finish();
             }
         });
 
         ftbTrangChu.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(View v) {
                 if (trove == false)
                 {
                     move();
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        taoThongBao();
-                    }
                     trove= true;
-
                 }
                 else
                 {
@@ -96,6 +123,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void AnhXa()
     {
+        edtGiaDien =(EditText) findViewById(R.id.edtgiadien);
+        edtGiaNuoc =(EditText) findViewById(R.id.edtgianuoc);
+        btnCapNhat =(Button) findViewById(R.id.btnCapNhatDienNuoc);
+
         ftbTrangChu = findViewById(R.id.ftbTrangChu);
         ftbHoaDon = findViewById(R.id.ftbHoaDon);
         ftbPhong = findViewById(R.id.ftbPhong);
@@ -144,58 +175,5 @@ public class MainActivity extends AppCompatActivity {
         paramsXeo.rightMargin -= (int) (ftbHoaDon.getWidth() * 1);
         ftbHoaDon.setLayoutParams(paramsXeo);
         ftbHoaDon.startAnimation(back_xeo);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void taoThongBao(){
-        String id = "channel_1";
-        String description = "123";
-        int importance = NotificationManager.IMPORTANCE_LOW;
-        NotificationChannel channel = new NotificationChannel(id, "123", importance);
-
-        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        manager.createNotificationChannel(channel);
-        PendingIntent pendingIntent = null;
-        Notification notification = new Notification.Builder(MainActivity.this, id)
-
-                .setCategory(Notification.CATEGORY_MESSAGE)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("This is a content title")
-                .setContentText("This is a content text")
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true)
-                .build();
-        manager.notify(1, notification);
-
-
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.baidu.com"));
-        pendingIntent = PendingIntent.getActivity(MainActivity.this, 0, intent, 0);
-        manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= 26) {
-
-            description = "143";
-            importance = NotificationManager.IMPORTANCE_LOW;
-            channel = new NotificationChannel(id, description, importance);
-            channel.enableVibration(true);
-            manager.createNotificationChannel(channel);
-            notification = new Notification.Builder(MainActivity.this, id)
-                    .setCategory(Notification.CATEGORY_MESSAGE)
-                    .setSmallIcon(R.drawable.thongbao)
-                    .setContentTitle("Thông Báo")
-                    .setContentText("Nhập số điện nước của tháng")
-                    .setContentIntent(pendingIntent)
-                    .setAutoCancel(true)
-                    .build();
-            manager.notify(1, notification);
-        } else {
-
-            notification = new NotificationCompat.Builder(MainActivity.this)
-                    .setContentTitle("This is content title")
-                    .setContentText("This is content text")
-                    .setContentIntent(pendingIntent)
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .build();
-            manager.notify(1, notification);
-        }
     }
 }

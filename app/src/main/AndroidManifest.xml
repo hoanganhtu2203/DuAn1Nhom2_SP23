@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <application
@@ -16,23 +20,56 @@
             android:name=".Activity.Register2ndActivity"
             android:exported="false" />
         <activity
-            android:name=".Action.SuaPhongActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Action.ThemPhongActivity"
-            android:exported="false" />
-        <activity
-            android:name=".View.DanhSachPhongActivity"
-            android:exported="false" />
-        <activity
             android:name=".Activity.WelcomeActivity"
             android:exported="true" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".View.HoaDonCuaTungPhongActivity"
+            android:label="Danh Sách Hóa Đơn"
+            />
+        <activity
+            android:name=".View.DanhSachPhong_HoaDonActivity"
+            android:label="Các Phòng" />
+        <activity
+            android:name=".Action.LapHoaDonActivity"
+            android:label="Lập Hóa Đơn" />
+        <activity
+            android:name=".View.ChiTietHoaDonActivity"
+            android:label="Chi Tiết Hóa Đơn" />
+        <activity
+            android:name=".Action.CapNhatGiaDienNuocActivity"
+            android:label="Cập nhật giá" />
+        <activity
+            android:name=".Action.SuaKhachActivity"
+            android:label="Sửa Người Thuê" />
+        <activity
+            android:name=".Action.ThemNguoiThueActivity"
+            android:label="Thêm Người Thuê" />
+        <activity
+            android:name=".Action.SuaPhongActivity"
+            android:label="Sửa Phòng" />
+        <activity
+            android:name=".Action.ThemPhongActivity"
+            android:label="Thêm Phòng" />
+        <activity
+            android:name=".View.DanhSachPhongActivity"
+            android:label="Danh Sách Phòng" />
+        <activity
+            android:name=".View.XemThanhVienActivity"
+            android:label="Người Thuê" />
+        <activity
+            android:name=".View.DanhSachHoaDonActivity"
+            android:label="Danh Hoa Đơn Các Phòng" />
+        <activity
+            android:name=".View.MainActivity"
+            android:label="Quản Lý Nhà Trọ"
+            android:exported="true"></activity>
         <activity
             android:name=".Activity.RegisterActivity"
             android:exported="false" />
@@ -41,9 +78,7 @@
             android:exported="true">
 
         </activity>
-        <activity
-            android:name=".View.MainActivity"
-            android:exported="true" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

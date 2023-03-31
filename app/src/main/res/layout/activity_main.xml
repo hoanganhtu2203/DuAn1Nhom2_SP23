@@ -52,8 +52,8 @@
         <ImageView
             android:layout_marginTop="50dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/aaa"/>
+            android:layout_height="350dp"
+            android:background="@drawable/fpoly"/>
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
