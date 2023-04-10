@@ -1,4 +1,4 @@
-package com.example.duan1nhom2_sp23.DTO;
+package com.example.duan1nhom2_sp23.Model;
 
 public class AdminDTO {
     String HOTENADMIN,TENDN,MATKHAU,EMAIL,SDT,GIOITINH,NGAYSINH;

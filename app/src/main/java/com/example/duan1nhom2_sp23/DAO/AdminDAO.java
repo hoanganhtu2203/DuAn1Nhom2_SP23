@@ -7,7 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 
-import com.example.duan1nhom2_sp23.DTO.AdminDTO;
+import com.example.duan1nhom2_sp23.Model.AdminDTO;
 import com.example.duan1nhom2_sp23.Database.CreateDatabase;
 
 import java.util.ArrayList;

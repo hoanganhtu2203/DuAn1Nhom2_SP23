@@ -10,7 +10,6 @@
         android:backgroundTint="@color/phong"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-
         android:visibility="invisible"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

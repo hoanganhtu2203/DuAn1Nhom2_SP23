@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.duan1nhom2_sp23.DAO.AdminDAO;
 import com.example.duan1nhom2_sp23.DAO.QuyenDAO;
-import com.example.duan1nhom2_sp23.DTO.AdminDTO;
+import com.example.duan1nhom2_sp23.Model.AdminDTO;
 import com.example.duan1nhom2_sp23.R;
 
 import java.util.Calendar;
