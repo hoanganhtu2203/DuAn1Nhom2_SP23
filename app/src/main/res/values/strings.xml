@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DuAn1Nhom2_SP23</string>
+    <string name="app_name">Quản Lý Nhà Trọ</string>
     <string name="logintittle">Đăng <br /> nhập</string>
     <string name="enter_username">Tên tài khoản</string>
     <string name="enter_password">Mật khẩu</string>

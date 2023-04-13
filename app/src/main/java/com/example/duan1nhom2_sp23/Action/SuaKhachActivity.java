@@ -34,7 +34,7 @@ public class SuaKhachActivity extends AppCompatActivity
     int makhach = -1;
     SQLiteDatabase database;
     EditText edtTenKhach,edtNgaySinh,edtCMND,edtSDT,edtNgayThue;
-    Spinner spnGioiTinh,spnPhongThue;
+    Spinner spnPhongThue;
     Button btnSua,btnChonNgaySinh,btnChonNgayThue;
     RadioGroup rdoGioiTinh;
     RadioButton rdoNam,rdoNu;

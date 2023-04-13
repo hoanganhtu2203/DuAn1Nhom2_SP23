@@ -20,11 +20,13 @@ import android.widget.FrameLayout;
 
 
 import com.example.duan1nhom2_sp23.Action.CapNhatGiaDienNuocActivity;
+import com.example.duan1nhom2_sp23.Activity.LoginActivity;
 import com.example.duan1nhom2_sp23.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
-    FloatingActionButton ftbTrangChu, ftbHoaDon, ftbPhong, ftbBangGia;
+    FloatingActionButton ftbTrangChu, ftbHoaDon, ftbPhong, ftbBangGia,fbtLogout;
+
     boolean aBoolean = true;
     private NotificationCompat.Builder notBuilder;
 //
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         ftbHoaDon = findViewById(R.id.ftbHoaDon);
         ftbPhong = findViewById(R.id.ftbPhong);
         ftbBangGia = findViewById(R.id.ftbBangGia);
+        fbtLogout = findViewById(R.id.btnLogout);
 
         ftbPhong.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +60,13 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        fbtLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
         ftbHoaDon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (aBoolean)
                 {
+                    fbtLogout.show();
                     ftbPhong.show();
                     ftbBangGia.show();
                     ftbHoaDon.show();
@@ -79,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else
                 {
+                    fbtLogout.hide();
                     ftbPhong.hide();
                     ftbBangGia.hide();
                     ftbHoaDon.hide();
