@@ -160,12 +160,7 @@ public class ThemNguoiThueActivity extends AppCompatActivity
         finish();
     }
 
-    /*public String getDateFormat(Date d)
-    {
-        SimpleDateFormat dft=new
-                SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        return dft.format(d);
-    }*/
+
     public void getDefaultInfor()
     {
         //lấy ngày hiện tại của hệ thống

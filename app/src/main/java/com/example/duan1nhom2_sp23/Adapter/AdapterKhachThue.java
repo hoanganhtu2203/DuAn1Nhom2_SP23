@@ -72,10 +72,9 @@ public class AdapterKhachThue extends BaseAdapter
         ImageButton btnXoaKhachThue = (ImageButton) row.findViewById(R.id.btnXoaKhachThue);
         ImageButton btnSuaKhachThue = (ImageButton) row.findViewById(R.id.btnSuaKhachThue);
         ImageButton btnGoiKhach = (ImageButton) row.findViewById(R.id.btnGoiKhach);
-ImageButton btnSms = (ImageButton) row.findViewById(R.id.btnSms);
+        ImageButton btnSms = (ImageButton) row.findViewById(R.id.btnSms);
         final KhachThue khachthue = list.get(position);
 
-        //txtMa.setText(khachthue.makhach);
         txttenkhachthue.setText(khachthue.tenkhach);
         txtngaysinh.setText(khachthue.ngaysinh);
         txtcmnd.setText(khachthue.cmnd);

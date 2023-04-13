@@ -52,8 +52,7 @@
         android:src="@drawable/home"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        app:tint="@null"
-
+        android:backgroundTint="@color/nuthome"
         />
     <include layout="@layout/banut" />
 

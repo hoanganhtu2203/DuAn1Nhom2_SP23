@@ -30,87 +30,27 @@ import java.util.ArrayList;
 public class HoaDonCuaTungPhongActivity extends AppCompatActivity
 {
     final String DATABASE_NAME = "QuanLyNhaTroNew.sqlite";
+
     SQLiteDatabase database;
     ListView lsvHoaDonCuaTungPhong;
     ArrayList<ChiTietHoaDon> list;
     AdapterHoaDonCuaTungPhong adapter;
     int maphong =-1;
     FloatingActionButton ftbTrangChu, ftbHoaDon, ftbPhong, ftbBangGia;
-    Animation tren, trai, xeo,back_trai,back_tren,back_xeo;
-    boolean trove = false;
+
+    boolean aBoolean = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hoa_don_cua_tung_phong);
-        AnhXa();
         ReadData();
-        ThaoTac();
+        thaotac();
     }
 
 
-    private void ThaoTac()
-    {
-        ftbPhong.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HoaDonCuaTungPhongActivity.this,DanhSachPhongActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        ftbBangGia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HoaDonCuaTungPhongActivity.this, CapNhatGiaDienNuocActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        ftbHoaDon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HoaDonCuaTungPhongActivity.this, DanhSachHoaDonActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
 
-        ftbTrangChu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (trove == false)
-                {
-                    move();
-                    trove= true;
-                }
-                else
-                {
-                    Back();
-                    trove=false;
-                }
-            }
-        });
-    }
-    private void AnhXa()
-    {
-        lsvHoaDonCuaTungPhong = (ListView) findViewById(R.id.lsvHoaDonCungTungPhong);
-        list = new ArrayList<>();
-        adapter = new AdapterHoaDonCuaTungPhong(this,list);
-        lsvHoaDonCuaTungPhong.setAdapter(adapter);
 
-        ftbTrangChu = findViewById(R.id.ftbTrangChu);
-        ftbHoaDon = findViewById(R.id.ftbHoaDon);
-        ftbPhong = findViewById(R.id.ftbPhong);
-        ftbBangGia = findViewById(R.id.ftbBangGia);
-
-        trai = AnimationUtils.loadAnimation(this, R.anim.trai);
-        tren = AnimationUtils.loadAnimation(this, R.anim.tren);
-        xeo = AnimationUtils.loadAnimation(this, R.anim.xeo);
-
-        back_trai = AnimationUtils.loadAnimation(this, R.anim.back_trai);
-        back_tren = AnimationUtils.loadAnimation(this, R.anim.back_tren);
-        back_xeo = AnimationUtils.loadAnimation(this, R.anim.back_xeo);
-    }
     private void ReadData()
     {
         Intent intent1 = getIntent();
@@ -182,41 +122,54 @@ public class HoaDonCuaTungPhongActivity extends AppCompatActivity
                 return super.onOptionsItemSelected(item);
         }
     }
+    private void thaotac() {
+        ftbTrangChu = findViewById(R.id.ftbTrangChu);
+        ftbHoaDon = findViewById(R.id.ftbHoaDon);
+        ftbPhong = findViewById(R.id.ftbPhong);
+        ftbBangGia = findViewById(R.id.ftbBangGia);
+
+        ftbPhong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HoaDonCuaTungPhongActivity.this, DanhSachPhongActivity.class);
+                startActivity(intent);
+
+            }
+        });
+        ftbBangGia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HoaDonCuaTungPhongActivity.this, CapNhatGiaDienNuocActivity.class);
+                startActivity(intent);
+
+            }
+        });
+        ftbHoaDon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HoaDonCuaTungPhongActivity.this, DanhSachHoaDonActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        ftbTrangChu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (aBoolean) {
+                    ftbPhong.show();
+                    ftbBangGia.show();
+                    ftbHoaDon.show();
+                    aBoolean = false;
+
+                } else {
+                    ftbPhong.hide();
+                    ftbBangGia.hide();
+                    ftbHoaDon.hide();
+                    aBoolean = true;
+                }
+            }
+        });
+    }}
 
 
-    private void move() {
-        FrameLayout.LayoutParams paramsTrai = (FrameLayout.LayoutParams) ftbPhong.getLayoutParams();
-        paramsTrai.rightMargin = (int) (ftbPhong.getWidth() * 1.7);
-        ftbPhong.setLayoutParams(paramsTrai);
-        ftbPhong.startAnimation(trai);
-
-        FrameLayout.LayoutParams paramsTren = (FrameLayout.LayoutParams) ftbBangGia.getLayoutParams();
-        paramsTren.bottomMargin = (int) (ftbBangGia.getWidth() * 1.7);
-        ftbBangGia.setLayoutParams(paramsTren);
-        ftbBangGia.startAnimation(tren);
-
-        FrameLayout.LayoutParams paramsXeo = (FrameLayout.LayoutParams) ftbHoaDon.getLayoutParams();
-        paramsXeo.bottomMargin = (int) (ftbHoaDon.getWidth() * 1.3);
-        paramsXeo.rightMargin = (int) (ftbHoaDon.getWidth() * 1.3);
-        ftbHoaDon.setLayoutParams(paramsXeo);
-        ftbHoaDon.startAnimation(xeo);
-    }
-    private void Back()
-    {
-        FrameLayout.LayoutParams paramsTrai = (FrameLayout.LayoutParams) ftbPhong.getLayoutParams();
-        paramsTrai.rightMargin -= (int) (ftbPhong.getWidth() * 1.4);
-        ftbPhong.setLayoutParams(paramsTrai);
-        ftbPhong.startAnimation(back_trai);
-
-        FrameLayout.LayoutParams paramsTren = (FrameLayout.LayoutParams) ftbBangGia.getLayoutParams();
-        paramsTren.bottomMargin -= (int) (ftbBangGia.getWidth() * 1.4);
-        ftbBangGia.setLayoutParams(paramsTren);
-        ftbBangGia.startAnimation(back_tren);
-
-        FrameLayout.LayoutParams paramsXeo = (FrameLayout.LayoutParams) ftbHoaDon.getLayoutParams();
-        paramsXeo.bottomMargin -= (int) (ftbHoaDon.getWidth() * 1);
-        paramsXeo.rightMargin -= (int) (ftbHoaDon.getWidth() * 1);
-        ftbHoaDon.setLayoutParams(paramsXeo);
-        ftbHoaDon.startAnimation(back_xeo);
-    }
-}

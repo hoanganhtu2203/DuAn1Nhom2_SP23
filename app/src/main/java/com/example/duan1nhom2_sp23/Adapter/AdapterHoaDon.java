@@ -69,10 +69,15 @@ public class AdapterHoaDon extends BaseAdapter
 
         SQLiteDatabase database = Database.initDatabase(context,DATABASE_NAME);
         Cursor cursor = database.rawQuery("SELECT * FROM Phong where MaPhong = ?",new String[]{maphong+""});
-        cursor.moveToFirst();
-        String tp = cursor.getString(1);
+        if (cursor.moveToFirst()) {
+            String tp = cursor.getString(1);
+            txttenphong.setText(tp);
+        } else {
+            txttenphong.setText("No data found");
+        }
 
-        txttenphong.setText(tp);
+        cursor.close();
+        database.close();
         String thang = cthd.ngaylaphoadon;
         String s = thang.substring(3,5);
         txtthang.setText(s);
@@ -193,9 +198,7 @@ public class AdapterHoaDon extends BaseAdapter
                 });
                 AlertDialog dialog =builder.create();
                 dialog.show();
-
             }
-
         });
         return row;
     }

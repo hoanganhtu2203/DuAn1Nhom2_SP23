@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,7 +67,7 @@ public class AdapterPhong extends BaseAdapter {
         TextView txttrangthai = (TextView)row.findViewById(R.id.tv_trangthai);
         ImageButton btnXoaPhong = (ImageButton) row.findViewById(R.id.btnXoaPhong);
         ImageButton btnSuaPhong = (ImageButton)  row.findViewById(R.id.btnSuaPhong);
-
+        ImageView imageView = (ImageView)row.findViewById(R.id.image);
         final Phong phong = list.get(position);
 
         txtmaphong.setText(phong.maphong+"");
@@ -82,12 +83,12 @@ public class AdapterPhong extends BaseAdapter {
         if(TT.equals("1"))
         {
             txttrangthai.setText("Đã thuê");
-            txttenphong.setBackgroundResource(R.color.dathue);
+            imageView.setBackgroundResource(R.drawable.house);
         }
         else
         {
             txttrangthai.setText("Còn trống");
-            txttenphong.setBackgroundResource(R.color.phongtrong);
+            imageView.setBackgroundResource(R.drawable.a);
         }
 
         btnSuaPhong.setOnClickListener(new View.OnClickListener() {
