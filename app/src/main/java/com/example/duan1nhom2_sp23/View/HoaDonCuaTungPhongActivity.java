@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.duan1nhom2_sp23.Action.CapNhatGiaDienNuocActivity;
 import com.example.duan1nhom2_sp23.Action.LapHoaDonActivity;
+import com.example.duan1nhom2_sp23.Activity.LoginActivity;
 import com.example.duan1nhom2_sp23.Adapter.AdapterHoaDonCuaTungPhong;
 import com.example.duan1nhom2_sp23.Database.Database;
 import com.example.duan1nhom2_sp23.Model.ChiTietHoaDon;
@@ -36,7 +37,7 @@ public class HoaDonCuaTungPhongActivity extends AppCompatActivity
     ArrayList<ChiTietHoaDon> list;
     AdapterHoaDonCuaTungPhong adapter;
     int maphong =-1;
-    FloatingActionButton ftbTrangChu, ftbHoaDon, ftbPhong, ftbBangGia;
+    FloatingActionButton ftbTrangChu, ftbHoaDon, ftbPhong, ftbBangGia, ftblogout;
 
     boolean aBoolean = true;
 
@@ -127,6 +128,14 @@ public class HoaDonCuaTungPhongActivity extends AppCompatActivity
         ftbHoaDon = findViewById(R.id.ftbHoaDon);
         ftbPhong = findViewById(R.id.ftbPhong);
         ftbBangGia = findViewById(R.id.ftbBangGia);
+        ftblogout = findViewById(R.id.btnLogout);
+        ftblogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HoaDonCuaTungPhongActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
 
         ftbPhong.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,11 +167,13 @@ public class HoaDonCuaTungPhongActivity extends AppCompatActivity
             public void onClick(View v) {
                 if (aBoolean) {
                     ftbPhong.show();
+                    ftblogout.show();
                     ftbBangGia.show();
                     ftbHoaDon.show();
                     aBoolean = false;
 
                 } else {
+                    ftblogout.hide();
                     ftbPhong.hide();
                     ftbBangGia.hide();
                     ftbHoaDon.hide();
