@@ -114,12 +114,14 @@ public class CapNhatGiaDienNuocActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (aBoolean) {
+                    fbtLogout.show();
                     ftbPhong.show();
                     ftbBangGia.show();
                     ftbHoaDon.show();
                     aBoolean = false;
 
                 } else {
+                    fbtLogout.hide();
                     ftbPhong.hide();
                     ftbBangGia.hide();
                     ftbHoaDon.hide();
