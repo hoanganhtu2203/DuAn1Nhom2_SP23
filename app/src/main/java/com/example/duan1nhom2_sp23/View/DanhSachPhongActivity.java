@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.duan1nhom2_sp23.Action.CapNhatGiaDienNuocActivity;
 import com.example.duan1nhom2_sp23.Action.ThemPhongActivity;
+import com.example.duan1nhom2_sp23.Activity.LoginActivity;
 import com.example.duan1nhom2_sp23.Adapter.AdapterPhong;
 import com.example.duan1nhom2_sp23.Database.Database;
 import com.example.duan1nhom2_sp23.Model.Phong;
@@ -35,7 +36,7 @@ public class DanhSachPhongActivity extends AppCompatActivity {
     AdapterPhong adapter;
     int maphong = -1;
     int position = 0;
-    FloatingActionButton ftbTrangChu, ftbHoaDon, ftbPhong, ftbBangGia;
+    FloatingActionButton ftbTrangChu, ftbHoaDon, ftbPhong, ftbBangGia, ftbLogout;
     boolean aBoolean = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,6 +181,7 @@ public class DanhSachPhongActivity extends AppCompatActivity {
 
     private void AnhXa()
     {
+        ftbLogout = findViewById(R.id.btnLogout);
         ftbTrangChu = findViewById(R.id.ftbTrangChu);
         ftbHoaDon = findViewById(R.id.ftbHoaDon);
         ftbPhong = findViewById(R.id.ftbPhong);
@@ -207,6 +209,13 @@ public class DanhSachPhongActivity extends AppCompatActivity {
 
             }
         });
+        ftbLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DanhSachPhongActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
         ftbHoaDon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -220,12 +229,14 @@ public class DanhSachPhongActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (aBoolean) {
+                    ftbLogout.show();
                     ftbPhong.show();
                     ftbBangGia.show();
                     ftbHoaDon.show();
                     aBoolean = false;
 
                 } else {
+                    ftbLogout.hide();
                     ftbPhong.hide();
                     ftbBangGia.hide();
                     ftbHoaDon.hide();

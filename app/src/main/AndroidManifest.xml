@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
-
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -16,13 +16,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DuAn1Nhom2_SP23"
         tools:targetApi="31">
+
         <activity
             android:name=".Activity.Register2ndActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.WelcomeActivity"
-            android:exported="true" >
-
+            android:name=".View.ManHinhChao"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,8 +31,7 @@
         </activity>
         <activity
             android:name=".View.HoaDonCuaTungPhongActivity"
-            android:label="Danh Sách Hóa Đơn"
-            />
+            android:label="Danh Sách Hóa Đơn" />
         <activity
             android:name=".View.DanhSachPhong_HoaDonActivity"
             android:label="Các Phòng" />
@@ -41,7 +40,7 @@
             android:label="Lập Hóa Đơn" />
         <activity
             android:name=".View.ChiTietHoaDonActivity"
-            android:label="Chi Tiết Hóa Đơn" />
+            android:label="Chi Taiết Hóa Đơn" />
         <activity
             android:name=".Action.CapNhatGiaDienNuocActivity"
             android:label="Cập nhật giá" />
@@ -68,16 +67,14 @@
             android:label="Danh Hoa Đơn Các Phòng" />
         <activity
             android:name=".View.MainActivity"
-            android:label="Quản Lý Nhà Trọ"
-            android:exported="true"></activity>
+            android:exported="true"
+            android:label="Quản Lý Nhà Trọ" />
         <activity
             android:name=".Activity.RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.LoginActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
 
         <meta-data
             android:name="preloaded_fonts"

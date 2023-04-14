@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.duan1nhom2_sp23.Activity.LoginActivity;
 import com.example.duan1nhom2_sp23.Database.Database;
 import com.example.duan1nhom2_sp23.R;
 import com.example.duan1nhom2_sp23.View.DanhSachHoaDonActivity;
@@ -27,7 +28,7 @@ public class CapNhatGiaDienNuocActivity extends AppCompatActivity {
     Button btnCapNhat;
     SQLiteDatabase database;
     final String DATABASE_NAME = "QuanLyNhaTroNew.sqlite";
-    FloatingActionButton ftbTrangChu, ftbHoaDon, ftbPhong, ftbBangGia;
+    FloatingActionButton ftbTrangChu, ftbHoaDon, ftbPhong, ftbBangGia, fbtLogout;
     boolean aBoolean = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +94,13 @@ public class CapNhatGiaDienNuocActivity extends AppCompatActivity {
 
             }
         });
+        fbtLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CapNhatGiaDienNuocActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
         ftbHoaDon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,7 +133,7 @@ public class CapNhatGiaDienNuocActivity extends AppCompatActivity {
         edtGiaDien = (EditText) findViewById(R.id.edtgiadien);
         edtGiaNuoc = (EditText) findViewById(R.id.edtgianuoc);
         btnCapNhat = (Button) findViewById(R.id.btnCapNhatDienNuoc);
-
+       fbtLogout= (FloatingActionButton) findViewById(R.id.btnLogout);
         ftbTrangChu = findViewById(R.id.ftbTrangChu);
         ftbHoaDon = findViewById(R.id.ftbHoaDon);
         ftbPhong = findViewById(R.id.ftbPhong);
